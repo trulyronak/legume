@@ -3,6 +3,8 @@ legume
 
 Professor Copperfield&#39;s Miracle Legumes will help you do anything
 
+> Jim Halpert
+
 [![oclif](https://img.shields.io/badge/cli-oclif-brightgreen.svg)](https://oclif.io)
 [![Version](https://img.shields.io/npm/v/legume.svg)](https://npmjs.org/package/legume)
 [![Downloads/week](https://img.shields.io/npm/dw/legume.svg)](https://npmjs.org/package/legume)
