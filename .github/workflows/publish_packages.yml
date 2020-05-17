@@ -26,7 +26,13 @@ jobs:
             env:
               NODE_AUTH_TOKEN: ${{secrets.npm_token}}
     alert-homebrew-update:
-        needs: publish-npm
+        # needs: publish-npm
         runs-on: ubuntu-latest
         steps:
-          - run: curl -XPOST -u "${{ secrets.PAT_USERNAME}}:${{secrets.PAT_TOKEN}}" -H "Accept:application/vnd.github.everest-preview+json"  -H "Content-Type:application/json" https://api.github.com/repos/trulyronak/homebrew-legume/dispatches --data '{"event_type":"build_application"}'
+          - name: Repository Dispatch
+            uses: peter-evans/repository-dispatch@v1.1.0
+            with:
+              token: ${{ secrets.REPO_ACCESS_TOKEN }}
+              repository: trulyronak/homebrew-legume
+              event-type: NPM Package Updated (Trigger Homebrew Package Update)
+              client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}"}'
