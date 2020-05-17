@@ -1,7 +1,7 @@
 {
   "name": "legume",
   "description": "Professor Copperfield's Miracle Legumes will help you do anything",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "author": "Ronak Shah @trulyronak",
   "bin": {
     "legume": "./bin/run"
