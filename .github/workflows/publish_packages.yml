@@ -26,7 +26,7 @@ jobs:
             env:
               NODE_AUTH_TOKEN: ${{secrets.npm_token}}
     alert-homebrew-update:
-        # needs: publish-npm
+        needs: publish-npm
         runs-on: ubuntu-latest
         steps:
           - name: Repository Dispatch
