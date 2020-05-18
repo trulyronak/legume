@@ -19,6 +19,7 @@ class Legume extends Command {
     const {args, flags} = this.parse(Legume)
 
     const name = flags.name ?? 'world'
+    this.log("Damn it Jim");
     this.log(`hello ${name} from ./src/index.ts, what miracle do you want today?`)
     if (args.file && flags.force) {
       this.log(`you input --force and --file: ${args.file}`)
