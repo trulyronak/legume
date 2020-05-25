@@ -1,38 +1,60 @@
 on:
-    push:
-      branches:
+  push:
+    branches:
       - master
 jobs:
-    build:
-        runs-on: ubuntu-latest
-        steps:
-          - uses: actions/checkout@v2
-          - uses: actions/setup-node@v1
-            with:
-              node-version: 12
-          - run: npm ci
-          - run: npm test
-    publish-npm:
-        needs: build
-        runs-on: ubuntu-latest
-        steps:
-          - uses: actions/checkout@v2
-          - uses: actions/setup-node@v1
-            with:
-              node-version: 12
-              registry-url: https://registry.npmjs.org/
-          - run: npm ci
-          - run: npm publish
-            env:
-              NODE_AUTH_TOKEN: ${{secrets.npm_token}}
-    alert-homebrew-update:
-        needs: publish-npm
-        runs-on: ubuntu-latest
-        steps:
-          - name: Repository Dispatch
-            uses: peter-evans/repository-dispatch@v1.1.0
-            with:
-              token: ${{ secrets.REPO_ACCESS_TOKEN }}
-              repository: trulyronak/homebrew-legume
-              event-type: NPM Package Updated (Trigger Homebrew Package Update)
-              client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}"}'
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12
+      - run: npm ci
+      - run: npm test
+  publish-npm:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12
+          registry-url: https://registry.npmjs.org/
+      - run: npm ci
+      - run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.npm_token}}
+  alert-homebrew-update:
+    needs: publish-npm
+    runs-on: ubuntu-latest
+    steps:
+      - name: Repository Dispatch
+        uses: peter-evans/repository-dispatch@v1.1.0
+        with:
+          token: ${{ secrets.REPO_ACCESS_TOKEN }}
+          repository: trulyronak/homebrew-legume
+          event-type: NPM Package Updated (Trigger Homebrew Package Update)
+          client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}"}'
+  package-deb:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12
+      - run: npm ci
+      - name: Install APT Utils
+        run: sudo apt-get install apt-utils
+      - run: npm i -g @oclif/dev-cli
+      - run: oclif-dev pack:deb
+      - uses: actions/setup-ruby@v1
+        with:
+          ruby-version: '2.6'
+      - run: gem install deb-s3
+      - name: Upload to s3
+        run: deb-s3 upload --bucket $BUCKET_NAME --codename $PACKAGE_NAME --preserve-versions dist/deb/legume_$(npm view $PACKAGE_NAME version)-1_amd64.deb
+        env:
+          BUCKET_NAME: ronakshah-deb-packages
+          PACKAGE_NAME: legume
