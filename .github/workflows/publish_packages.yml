@@ -60,3 +60,10 @@ jobs:
           PACKAGE_NAME: legume
           AWS_SECRET_ACCESS_KEY: ${{secrets.AWS_SECRET_ACCESS_KEY}}
           AWS_ACCESS_KEY_ID: ${{secrets.AWS_ACCESS_KEY_ID}}
+  test-secret:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Test secret
+      run: echo $ENV_VAR
+      env:
+        ENV_VAR: ${{secrets.wowitsasecret}}
