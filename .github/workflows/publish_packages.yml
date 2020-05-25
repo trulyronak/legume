@@ -54,7 +54,7 @@ jobs:
           ruby-version: '2.6'
       - run: sudo gem install deb-s3
       - name: Upload to s3
-        run: sudo deb-s3 upload --bucket $BUCKET_NAME --codename $PACKAGE_NAME --preserve-versions dist/deb/legume_$(npm view $PACKAGE_NAME version)-1_amd64.deb
+        run: sudo deb-s3 upload --access-key-id=$AWS_ACCESS_KEY_ID --secret-access-key=$SECRET_ACCESS_KEY --bucket $BUCKET_NAME --codename $PACKAGE_NAME --preserve-versions dist/deb/legume_$(npm view $PACKAGE_NAME version)-1_amd64.deb
         env:
           BUCKET_NAME: ronakshah-deb-packages
           PACKAGE_NAME: legume
