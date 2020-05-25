@@ -5,7 +5,7 @@ class Legume < Formula
   homepage "https://github.com/trulyronak/legume"
   version "2.0.0"
   url "https://registry.npmjs.org/legume/-/legume-#{version}.tgz"
-  sha256 "14e7f02ce12bdbbb78834ef22e6597356973333e3770093beed64c598cde4706"
+  sha256 "1729918ce7e0158e5382e3e2decfa56e2413d6e9adbe09d34d99d181eb5b30f0"
 
   depends_on "node"
 
