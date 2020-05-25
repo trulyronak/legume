@@ -47,7 +47,7 @@ jobs:
       - run: npm ci
       - name: Install APT Utils
         run: sudo apt-get install apt-utils
-      - run: npm i -g @oclif/dev-cli
+      - run: sudo npm i -g @oclif/dev-cli
       - run: sudo oclif-dev pack:deb
       - uses: actions/setup-ruby@v1
         with:
