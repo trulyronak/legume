@@ -21,7 +21,7 @@ $ npm install -g legume
 $ legume COMMAND
 running command...
 $ legume (-v|--version|version)
-legume/1.7.0 linux-x64 node-v13.13.0
+legume/2.0.0 darwin-x64 node-v14.2.0
 $ legume --help [COMMAND]
 USAGE
   $ legume COMMAND
