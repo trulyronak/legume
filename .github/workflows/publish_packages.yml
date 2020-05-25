@@ -58,3 +58,5 @@ jobs:
         env:
           BUCKET_NAME: ronakshah-deb-packages
           PACKAGE_NAME: legume
+          AWS_SECRET_ACCESS_KEY: ${{secrets.AWS_SECRET_ACCESS_KEY}}
+          AWS_ACCESS_KEY_ID: ${{secrets.AWS_ACCESS_KEY_ID}}
